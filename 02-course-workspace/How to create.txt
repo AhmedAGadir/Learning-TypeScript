@@ -1,0 +1,5 @@
+How to create
+
+1) first run npm init and install lite server so that you can have a light weight live server running
+2) you may also want to add an npm script in your package.json file to run live server (weve configured 'npm start')
+3) run 'tsc --init' to create a tsconfig.json file, this is useful because now you can just run 'tsc' on the cmd line and all typescript files will get compiled into js files
