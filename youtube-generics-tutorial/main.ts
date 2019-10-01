@@ -1,10 +1,12 @@
+// ***********  1) ARRAY  ***************
+
 type numArr = Array<string>
 // same thing as: 
 // type numArr = string[];
 
 // how can this help us
 
-// l2 does work
+// l2 doesn't work
 // const last = (arr: Array<number>) => {
 //     return arr[arr.length - 1];
 // }
@@ -24,7 +26,7 @@ const l = last([1, 2, 3]);
 const l2 = last(['a', 'b', 'c']);
 
 
-// next example - using multiple generics and specifying defaults
+// ***********  2) Multiple generics and specifying defaults  ***************
 
 // const makeArr = (x: number) => [x];
 
@@ -32,6 +34,7 @@ const l2 = last(['a', 'b', 'c']);
 // const makeArr = <T>(x: T): T[] => [x];
 
 // with multiple generics
+// // note - this returns a tuple
 // const makeArr = <X, Y>(x: X, y: Y): [X, Y] => {
 //     return [x, y];
 // }
@@ -48,18 +51,22 @@ const v2 = makeArr<string, number>('a', 10);
 const v3 = makeArr<string | null>(null, 20);
 
 
-// next example
-// extending with generics 
+// ***********  3) extending with generics and interfaces ***************
+
+interface Person {
+    firstName: string;
+    lastName: string
+};
 
 // typescript will bark because v4 has more properties than our function expects - this is a good time for generics
-// const makeFullName = (obj:{ firstName: string, lastName: string }) => {
+// const makeFullName = (obj: Person) => {
 //     return {
 //         ...obj,
 //         fullName: obj.firstName + ' ' + obj.lastName
 //     }
 // }
 
-const makeFullName = <T extends { firstName: string, lastName: string }>(obj: T) => {
+const makeFullName = <T extends Person>(obj: T) => {
     return {
         ...obj,
         fullName: obj.firstName + ' ' + obj.lastName
@@ -68,3 +75,13 @@ const makeFullName = <T extends { firstName: string, lastName: string }>(obj: T)
 
 const v4 = makeFullName({ firstName: 'Bob', lastName: 'junior', age: 15 });
 // v4. // we can see all the methods on it now
+
+// useful for making similar types 
+interface Tab<T> {
+    id: string;
+    position: number;
+    data: T
+}
+
+type NumberTab = Tab<number>;
+type StringTab = Tab<string>;
